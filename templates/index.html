@@ -8,7 +8,7 @@
 </head>
 <body>
   <h1>markdownlist</h1>
-  {{range $key, $value := .}}
+  {{range $key := .}}
   <a href="/read?file={{$key}}">{{$key}}</a><br/>
   {{end}}
 </body>
