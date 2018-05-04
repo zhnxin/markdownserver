@@ -9,7 +9,7 @@
 <body>
   <h1>markdownlist</h1>
   {{range $key := .}}
-  <a href="/read?file={{$key}}">{{$key}}</a><br/>
+  <a href="/file/{{$key}}/">{{$key}}</a><br/>
   {{end}}
 </body>
 </html>
