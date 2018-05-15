@@ -11,5 +11,29 @@
   {{range $key := .}}
   <a href="/file/{{$key}}/">{{$key}}</a><br/>
   {{end}}
+  <button type="button" id="refresh">refresh files</button>
 </body>
+<script>
+  var xmlhttp = "";
+  function ajaxGet(urlstr, responseFunc) {
+          if (window.XMLHttpRequest) {
+              xmlhttp = new XMLHttpRequest();
+          } else {
+              xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+          }
+          xmlhttp.open("GET", urlstr, true);
+          xmlhttp.send();
+          xmlhttp.onreadystatechange = responseFunc;
+      }
+document.getElementById("refresh").onclick = function(evt){
+  ajaxGet("/update",function(){
+    if(xmlhttp.status!=200){
+      alert("something wrong with the server");
+    }else{
+      location.reload();
+    }
+  });
+
+};
+</script>
 </html>

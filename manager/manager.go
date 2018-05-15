@@ -63,8 +63,10 @@ func (s *MarkdownsManeger) Reflesh() bool {
 		s.data = make(map[string]*MarkdownFile)
 		files, _ := filepath.Glob(fmt.Sprintf("./%s/*", s.markdownPath))
 		for _, f := range files {
-			fileName := f[strings.LastIndex(f, string(os.PathSeparator))+1 : len(f)-3]
-			s.data[fileName] = &MarkdownFile{f, nil, new(trylock.Mutex)}
+			if strings.HasSuffix(f, ".md") || strings.HasSuffix(f, ".MD") {
+				fileName := f[strings.LastIndex(f, string(os.PathSeparator))+1 : len(f)-3]
+				s.data[fileName] = &MarkdownFile{f, nil, new(trylock.Mutex)}
+			}
 		}
 		return true
 

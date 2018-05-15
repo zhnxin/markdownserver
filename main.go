@@ -61,6 +61,10 @@ func init() {
 	flag.StringVar(&HttpPort, "p", "8000", "service port")
 	flag.StringVar(&TemplateFloder, "t", "", "path for the floder containning custom html file,not required")
 	flag.StringVar(&MarkdownFloder, "f", "markdowns", "the markdows files floder, default: markdows")
+
+}
+
+func main() {
 	flag.Parse()
 
 	m := manager.New(MarkdownFloder)
@@ -70,9 +74,6 @@ func init() {
 	}
 	DefaultTemplateBox = packr.NewBox("templates")
 	hander.markdownsManeger.Reflesh()
-}
-
-func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/", hander.Index)
 	r.HandleFunc("/file/{filename}/", hander.ReaderHander)
