@@ -28,7 +28,10 @@
 
 ## 编译
 
-* go build
+```
+go-bindata -o assets/asset.go -pkg=assets assets/...
+go build
+```
 
 ## 锁说明
 

@@ -36,7 +36,7 @@ func (m *MarkdownFile) readMarkdown() ([]byte, error) {
 	if m.updateLock.TryLock() {
 		defer m.updateLock.Unlock()
 		if fileread, err := ioutil.ReadFile(m.path); err == nil {
-			unsafe := blackfriday.Run(fileread)
+			unsafe := blackfriday.Run(fileread, blackfriday.WithExtensions(blackfriday.CommonExtensions))
 			html := bluemonday.UGCPolicy().SanitizeBytes(unsafe)
 			m.data = html
 			return html, nil

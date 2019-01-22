@@ -10,6 +10,7 @@ import (
 	"github.com/gobuffalo/packr"
 	"github.com/gorilla/mux"
 
+	"./assets"
 	"./manager"
 )
 
@@ -21,7 +22,11 @@ type MarkdownsHandler struct {
 func (h *MarkdownsHandler) Index(w http.ResponseWriter, req *http.Request) {
 	t := template.New("index.html")
 	if h.templatesPath == "" {
-		t, _ = t.Parse(DefaultTemplateBox.String("index.html"))
+		templateBody, err := assets.Asset("assets/index.html")
+		if err != nil {
+			w.Write([]byte(err.Error()))
+		}
+		t, _ = t.Parse(string(templateBody))
 	} else {
 		t, _ = t.ParseFiles(fmt.Sprintf("%s%sindex.html", h.templatesPath, string(os.PathSeparator)))
 	}
@@ -72,7 +77,6 @@ func main() {
 		&m,
 		TemplateFloder,
 	}
-	DefaultTemplateBox = packr.NewBox("templates")
 	hander.markdownsManeger.Reflesh()
 	r := mux.NewRouter()
 	r.HandleFunc("/", hander.Index)
